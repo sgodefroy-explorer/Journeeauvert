@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S. Godefroy — Site vitrine</title>
+  <meta name="description" content="Site vitrine de S. Godefroy : présentation, services et contact.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#" class="logo">S. Godefroy</a>
+      <nav>
+        <a href="#apropos">À propos</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Bienvenue</p>
+        <h1>S. Godefroy</h1>
+        <p class="lead">Accompagnement, conseil et projets numériques — simplement et efficacement.</p>
+        <a href="#contact" class="btn">Me contacter</a>
+      </div>
+    </section>
+
+    <section id="apropos" class="section">
+      <div class="container narrow">
+        <h2>À propos</h2>
+        <p>Je m'appelle S. Godefroy. J'aide les entreprises et les particuliers à concrétiser leurs projets avec une approche pragmatique, à l'écoute et orientée résultats.</p>
+      </div>
+    </section>
+
+    <section id="services" class="section alt">
+      <div class="container">
+        <h2>Services</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Conseil</h3>
+            <p>Analyse de vos besoins et recommandations claires pour avancer.</p>
+          </article>
+          <article class="card">
+            <h3>Réalisation</h3>
+            <p>Mise en œuvre de vos projets, de l'idée à la mise en ligne.</p>
+          </article>
+          <article class="card">
+            <h3>Accompagnement</h3>
+            <p>Suivi dans la durée pour faire évoluer vos outils et vos équipes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container narrow">
+        <h2>Contact</h2>
+        <p>Une question, un projet ? Écrivez-moi.</p>
+        <a href="mailto:contact@exemple.fr" class="btn">contact@exemple.fr</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> S. Godefroy. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
