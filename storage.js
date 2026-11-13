@@ -40,12 +40,17 @@
   }
 
   async function list() {
+    let records;
     if (remote) {
       const res = await fetch(`${cfg.SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, { headers: headers() });
       if (!res.ok) throw new Error('Lecture impossible (' + res.status + ').');
-      return res.json();
+      records = await res.json();
+    } else {
+      records = readLocal();
     }
-    return readLocal().sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+    const seed = window.FICHES_INITIALES || [];
+    return records.concat(seed)
+      .sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
   }
 
   window.Inscriptions = { add, list, remote };
