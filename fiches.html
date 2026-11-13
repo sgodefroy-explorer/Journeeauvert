@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S. Godefroy — Fiches des inscrits</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="assets/ease-symbole.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo">S. Godefroy</a>
+      <nav class="nav-links">
+        <a href="index.html#apropos">À propos</a>
+        <a href="index.html#inscription">S'inscrire</a>
+        <a href="fiches.html" aria-current="page">Fiches inscrits</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <p class="eyebrow">Inscriptions</p>
+      <h2>Fiches des inscrits.</h2>
+
+      <div class="toolbar">
+        <input type="search" id="search" placeholder="Rechercher un nom, une entreprise, un e-mail…" aria-label="Rechercher">
+        <span><span class="count" id="count">0</span> <span class="label">fiches</span></span>
+        <button class="btn btn-secondary" id="export">Exporter CSV</button>
+      </div>
+
+      <div id="fiches" class="fiches" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> S. Godefroy. Tous droits réservés.</p>
+      <img src="assets/ease-signature.png" alt="ease" class="footer-logo">
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="storage.js"></script>
+  <script>
+    const grid = document.getElementById('fiches');
+    const count = document.getElementById('count');
+    const search = document.getElementById('search');
+    let all = [];
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const initials = f => ((f.prenom || '')[0] || '') + ((f.nom || '')[0] || '');
+    const fmtDate = d => d ? new Date(d).toLocaleString('fr-FR', { dateStyle: 'long', timeStyle: 'short' }) : '';
+
+    function card(f) {
+      const rows = [
+        ['E-mail', f.email ? `<a href="mailto:${esc(f.email)}">${esc(f.email)}</a>` : ''],
+        ['Téléphone', f.telephone ? `<a href="tel:${esc(f.telephone)}">${esc(f.telephone)}</a>` : ''],
+        ['Fonction', esc(f.fonction)]
+      ].filter(r => r[1]);
+      return `
+        <article class="fiche">
+          <div class="fiche-head">
+            <div class="avatar">${esc(initials(f).toUpperCase())}</div>
+            <div>
+              <h3>${esc(f.prenom)} ${esc(f.nom)}</h3>
+              ${f.entreprise ? `<div class="org">${esc(f.entreprise)}</div>` : ''}
+            </div>
+          </div>
+          ${f.participation ? `<span class="tag">${esc(f.participation)}</span>` : ''}
+          <dl>${rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}</dl>
+          ${f.message ? `<div class="note">${esc(f.message)}</div>` : ''}
+          <div class="fiche-date">Inscrit le ${esc(fmtDate(f.created_at))}</div>
+        </article>`;
+    }
+
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      const list = q ? all.filter(f =>
+        ['prenom','nom','email','entreprise','fonction','participation'].some(k => (f[k] || '').toLowerCase().includes(q))
+      ) : all;
+      count.textContent = list.length;
+      grid.innerHTML = list.length
+        ? list.map(card).join('')
+        : `<div class="empty" style="grid-column:1/-1">${all.length ? 'Aucune fiche ne correspond à la recherche.' : 'Aucune inscription pour le moment. <a href="index.html#inscription" style="color:var(--color-primary-text)">Être le premier à s\'inscrire</a>.'}</div>`;
+    }
+
+    function exportCsv() {
+      const cols = ['created_at','prenom','nom','email','telephone','entreprise','fonction','participation','message'];
+      const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+      const csv = '﻿' + [cols.join(';'), ...all.map(f => cols.map(c => q(f[c])).join(';'))].join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'inscriptions.csv';
+      a.click();
+    }
+
+    search.addEventListener('input', render);
+    document.getElementById('export').addEventListener('click', exportCsv);
+
+    Inscriptions.list()
+      .then(list => { all = list; render(); })
+      .catch(err => { grid.innerHTML = `<div class="empty" style="grid-column:1/-1">${esc(err.message)}</div>`; });
+  </script>
+</body>
+</html>

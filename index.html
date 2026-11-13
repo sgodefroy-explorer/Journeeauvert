@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S. Godefroy — Site vitrine</title>
-  <meta name="description" content="Site vitrine de S. Godefroy : présentation, services et contact.">
+  <title>S. Godefroy — Inscription</title>
+  <meta name="description" content="Site de S. Godefroy : présentation et formulaire d'inscription.">
+  <link rel="icon" type="image/png" href="assets/ease-symbole.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
-      <a href="#" class="logo">S. Godefroy</a>
-      <nav>
+      <a href="index.html" class="logo">S. Godefroy</a>
+      <nav class="nav-links">
         <a href="#apropos">À propos</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
+        <a href="#inscription">S'inscrire</a>
+        <a href="fiches.html">Fiches inscrits</a>
       </nav>
     </div>
   </header>
@@ -22,55 +26,140 @@
   <main>
     <section class="hero">
       <div class="container">
-        <p class="eyebrow">Bienvenue</p>
-        <h1>S. Godefroy</h1>
-        <p class="lead">Accompagnement, conseil et projets numériques — simplement et efficacement.</p>
-        <a href="#contact" class="btn">Me contacter</a>
+        <p class="eyebrow reveal">Bienvenue</p>
+        <h1 class="reveal">S. Godefroy.<br><span class="accent">Inscrivez-vous.</span></h1>
+        <p class="lead reveal">Laissez vos coordonnées en une minute : votre fiche est enregistrée et nous revenons vers vous.</p>
+        <div class="actions reveal">
+          <a href="#inscription" class="btn btn-primary">S'inscrire</a>
+          <a href="fiches.html" class="btn btn-ghost">Voir les inscrits</a>
+        </div>
       </div>
     </section>
 
-    <section id="apropos" class="section">
-      <div class="container narrow">
-        <h2>À propos</h2>
-        <p>Je m'appelle S. Godefroy. J'aide les entreprises et les particuliers à concrétiser leurs projets avec une approche pragmatique, à l'écoute et orientée résultats.</p>
-      </div>
-    </section>
-
-    <section id="services" class="section alt">
+    <section id="apropos" class="section alt">
       <div class="container">
-        <h2>Services</h2>
+        <p class="eyebrow">À propos</p>
+        <h2 class="reveal">Simple, rapide, sans surprise.</h2>
         <div class="cards">
-          <article class="card">
-            <h3>Conseil</h3>
-            <p>Analyse de vos besoins et recommandations claires pour avancer.</p>
+          <article class="card reveal">
+            <span class="pastille">1</span>
+            <h3>Vous remplissez</h3>
+            <p>Quelques champs suffisent : nom, e-mail et ce que vous attendez.</p>
           </article>
-          <article class="card">
-            <h3>Réalisation</h3>
-            <p>Mise en œuvre de vos projets, de l'idée à la mise en ligne.</p>
+          <article class="card reveal">
+            <span class="pastille">2</span>
+            <h3>Votre fiche est créée</h3>
+            <p>Elle est enregistrée immédiatement et consultable par l'organisation.</p>
           </article>
-          <article class="card">
-            <h3>Accompagnement</h3>
-            <p>Suivi dans la durée pour faire évoluer vos outils et vos équipes.</p>
+          <article class="card reveal">
+            <span class="pastille">3</span>
+            <h3>On vous recontacte</h3>
+            <p>Vous recevez les informations utiles par e-mail.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
+    <section id="inscription" class="section">
       <div class="container narrow">
-        <h2>Contact</h2>
-        <p>Une question, un projet ? Écrivez-moi.</p>
-        <a href="mailto:contact@exemple.fr" class="btn">contact@exemple.fr</a>
+        <p class="eyebrow">Inscription</p>
+        <h2>Créez votre fiche.</h2>
+        <p>Les champs marqués d'un <span style="color:var(--color-primary-text)">*</span> sont obligatoires.</p>
+
+        <form id="form-inscription" class="form-card" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="prenom">Prénom <span class="req">*</span></label>
+              <input id="prenom" name="prenom" required autocomplete="given-name" maxlength="80">
+            </div>
+            <div class="field">
+              <label for="nom">Nom <span class="req">*</span></label>
+              <input id="nom" name="nom" required autocomplete="family-name" maxlength="80">
+            </div>
+            <div class="field">
+              <label for="email">E-mail <span class="req">*</span></label>
+              <input id="email" name="email" type="email" required autocomplete="email" maxlength="160">
+            </div>
+            <div class="field">
+              <label for="telephone">Téléphone</label>
+              <input id="telephone" name="telephone" type="tel" autocomplete="tel" maxlength="30">
+            </div>
+            <div class="field">
+              <label for="entreprise">Entreprise</label>
+              <input id="entreprise" name="entreprise" autocomplete="organization" maxlength="120">
+            </div>
+            <div class="field">
+              <label for="fonction">Fonction</label>
+              <input id="fonction" name="fonction" autocomplete="organization-title" maxlength="120">
+            </div>
+            <div class="field full">
+              <label for="participation">Participation <span class="req">*</span></label>
+              <select id="participation" name="participation" required>
+                <option value="">Choisir…</option>
+                <option>Présent toute la journée</option>
+                <option>Présent le matin</option>
+                <option>Présent l'après-midi</option>
+                <option>Je souhaite être informé</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="message">Message ou remarque</label>
+              <textarea id="message" name="message" maxlength="1000" placeholder="Régime alimentaire, attentes, questions…"></textarea>
+            </div>
+            <div class="field full checkbox">
+              <input id="consentement" name="consentement" type="checkbox" required>
+              <label for="consentement">J'accepte que mes informations soient enregistrées et consultées par l'organisation pour le suivi de mon inscription. <span class="req">*</span></label>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Envoyer mon inscription</button>
+            <p class="form-note">Vos données ne sont utilisées que pour cette inscription.</p>
+          </div>
+          <div id="form-message" class="message" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <p>© <span id="year"></span> S. Godefroy. Tous droits réservés.</p>
+      <img src="assets/ease-signature.png" alt="ease" class="footer-logo">
     </div>
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="config.js"></script>
+  <script src="storage.js"></script>
+  <script>
+    const form = document.getElementById('form-inscription');
+    const msg = document.getElementById('form-message');
+    const btn = document.getElementById('submit-btn');
+
+    function show(type, text) { msg.className = 'message ' + type; msg.textContent = text; }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        show('error', 'Merci de compléter les champs obligatoires.');
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form).entries());
+      Object.keys(data).forEach(k => { if (typeof data[k] === 'string') data[k] = data[k].trim(); });
+      data.consentement = form.consentement.checked;
+
+      btn.disabled = true; btn.textContent = 'Envoi…';
+      try {
+        await Inscriptions.add(data);
+        form.reset();
+        show('ok', `Merci ${data.prenom}, votre inscription est enregistrée.`);
+      } catch (err) {
+        show('error', err.message || 'Une erreur est survenue, réessayez.');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Envoyer mon inscription';
+      }
+    });
+  </script>
 </body>
 </html>
