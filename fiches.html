@@ -47,6 +47,7 @@
 
   <script src="config.js"></script>
   <script src="fiches-initiales.js"></script>
+  <script src="clown.js"></script>
   <script src="storage.js"></script>
   <script>
     const grid = document.getElementById('fiches');
@@ -62,12 +63,13 @@
       const rows = [
         ['E-mail', f.email ? `<a href="mailto:${esc(f.email)}">${esc(f.email)}</a>` : ''],
         ['Téléphone', f.telephone ? `<a href="tel:${esc(f.telephone)}">${esc(f.telephone)}</a>` : ''],
-        ['Fonction', esc(f.fonction)]
+        ['Fonction', esc(f.fonction)],
+        ['LinkedIn', /^https:\/\/([a-z]+\.)?linkedin\.com\//.test(f.linkedin || '') ? `<a href="${esc(f.linkedin)}" target="_blank" rel="noopener">Voir le profil</a>` : '']
       ].filter(r => r[1]);
       return `
         <article class="fiche">
           <div class="fiche-head">
-            <div class="avatar">${esc(initials(f).toUpperCase())}</div>
+            <div class="avatar avatar-clown" title="${esc(initials(f).toUpperCase())}">${clownAvatar(f.id || (f.prenom + f.nom + f.email))}</div>
             <div>
               <h3>${esc(f.prenom)} ${esc(f.nom)}</h3>
               ${f.entreprise ? `<div class="org">${esc(f.entreprise)}</div>` : ''}
